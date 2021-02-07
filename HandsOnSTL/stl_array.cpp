@@ -36,8 +36,8 @@ public:
 
 
 public:
-		int age;
-		string name;
+	int age;
+	string name;
 };
 
 std::ostream& operator<<(std::ostream& os, const Person& person){
@@ -73,7 +73,7 @@ void operate_on_array(T t){
 	}
 }
 int main(void){
-	cout << "Hello STL Array" << endl;
+	cout << "!!!!Hello STL Array!!!!" << endl;
 	const int array_size = 5;
 	{
 		cout << endl << "====Init array====" << endl;
@@ -105,7 +105,12 @@ int main(void){
 		print_array(persons3);
 	}
 
-	// iterators: begin/end, rbegin/rend, cbegin/cend, crbegin/crend
+
+//	iterators: begin/end, rbegin/rend, cbegin/cend, crbegin/crend
+//	begin: Returns an iterator pointing to the first element in the array container.
+//	end: Returns an iterator pointing to the past-the-end element in the array container.
+//	rbegin: Returns a reverse iterator pointing to the last element in the array container.
+//	rend: Returns a reverse iterator pointing to the theoretical element preceding the first element in the array (which is considered its reverse end).
 	cout << endl << "====iterators====" << endl;
 	std::array<Person, array_size> persons{
 		Person(1, "baby1"),
@@ -119,16 +124,29 @@ int main(void){
 		cout << *it << endl;
 	}
 
-	for(auto it = persons.rbegin(); it != persons.rend(); it++){
+	for(std::array<Person,array_size>::reverse_iterator it = persons.rbegin(); it != persons.rend(); it++){
 		cout << *it << endl;
 	}
 
-	//capacity:  size, max_size, empty
+	//capacity:
+	cout << endl << "====capacity====" << endl;
+
+	// size: Returns the number of elements in the array container.
+	// max_size: Returns the maximum number of elements that the array container can hold.
+	// empty: Returns a bool value indicating whether the array container is empty, i.e. whether its size is 0.
 	cout << "size is " << persons.size() << endl;
 	cout << "max size is " << persons.max_size() << endl;
 	cout << boolalpha << "is empty " << persons.empty() << endl << noboolalpha;
 
 	//access: [], at, data();
+	cout << endl << "====access====" << endl;
+
+	// [n], Returns a reference to the element at position n in the array container.
+	// at(n): Returns a reference to the element at position n in the array.
+	// front: Returns a reference to the first element in the array container.
+	// end: Returns a reference to the last element in the array container
+	// data: Returns a pointer to the first element in the array object.
+
 	cout << persons[1] << endl;
 	cout << persons.at(1) << endl;
 
@@ -150,8 +168,11 @@ int main(void){
 		cout << *(p+i) << endl;
 	}
 
-	//modifier
+	//modifier:
+	// fill: Sets val as the value for all the elements in the array object.
+	// swap: Exchanges the content of the array by the content of x, which is another array object of the same type (including the same size).
 	{
+
 		cout << endl << "====== modifier ======" << endl;
 		std::array<Person, 5> persons1;
 		persons1.fill(Person(10, "John"));
@@ -172,8 +193,11 @@ int main(void){
 		print_array(persons2);
 	}
 
-	// Non member functions
-	{	
+	// Non member functions:
+	// std::get(array) Returns a reference to the Ith element of array arr.
+	// rational operators, == >= <=: Performs the appropriate comparison operation between the array containers lhs and rhs.
+	{
+
 		cout << endl << "==== No member functions ==== " << endl;
 		//std::get
 		Person& p = std::get<2>(persons);
@@ -228,5 +252,5 @@ int main(void){
 		// cout << numbers[0] << endl;
 	}
 
-	cout << endl << "Goodbye STL Array" << endl;
+	cout << endl << "!!!! Goodbye STL Array !!!!" << endl;
 }
