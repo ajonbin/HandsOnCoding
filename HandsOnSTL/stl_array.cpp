@@ -11,7 +11,6 @@ void print_array(T& arr){
 	cout << endl;
 }
 
-
 class Person{
 public:
 	Person(){
@@ -72,6 +71,7 @@ void operate_on_array(T t){
 		cout << "Not int, passing by" << endl;
 	}
 }
+
 int main(void){
 	cout << "!!!!Hello STL Array!!!!" << endl;
 	const int array_size = 5;
@@ -105,14 +105,7 @@ int main(void){
 		print_array(persons3);
 	}
 
-
-//	iterators: begin/end, rbegin/rend, cbegin/cend, crbegin/crend
-//	begin: Returns an iterator pointing to the first element in the array container.
-//	end: Returns an iterator pointing to the past-the-end element in the array container.
-//	rbegin: Returns a reverse iterator pointing to the last element in the array container.
-//	rend: Returns a reverse iterator pointing to the theoretical element preceding the first element in the array (which is considered its reverse end).
-	cout << endl << "====iterators====" << endl;
-	std::array<Person, array_size> persons{
+	std::array<Person, array_size> babies{
 		Person(1, "baby1"),
 		Person(2, "baby2"),
 		Person(3, "baby3"),
@@ -120,52 +113,68 @@ int main(void){
 		Person(5, "baby5"),		
 	};
 
-	for(std::array<Person,array_size>::iterator it = persons.begin(); it != persons.end(); it++){
-		cout << *it << endl;
+	{
+		//	iterators: begin/end, rbegin/rend, cbegin/cend, crbegin/crend
+		//	begin: Returns an iterator pointing to the first element in the array container.
+		//	end: Returns an iterator pointing to the past-the-end element in the array container.
+		//	rbegin: Returns a reverse iterator pointing to the last element in the array container.
+		//	rend: Returns a reverse iterator pointing to the theoretical element preceding the first element in the array (which is considered its reverse end).
+		cout << endl << "====iterators====" << endl;
+		std::array<Person, array_size> persons = babies;
+
+		for(std::array<Person,array_size>::iterator it = persons.begin(); it != persons.end(); it++){
+			cout << *it << endl;
+		}
+
+		for(std::array<Person,array_size>::reverse_iterator it = persons.rbegin(); it != persons.rend(); it++){
+			cout << *it << endl;
+		}
+	}
+	{
+		std::array<Person, array_size> persons = babies;
+
+		//capacity:
+		cout << endl << "====capacity====" << endl;
+
+		// size: Returns the number of elements in the array container.
+		// max_size: Returns the maximum number of elements that the array container can hold.
+		// empty: Returns a bool value indicating whether the array container is empty, i.e. whether its size is 0.
+		cout << "size is " << persons.size() << endl;
+		cout << "max size is " << persons.max_size() << endl;
+		cout << boolalpha << "is empty " << persons.empty() << endl << noboolalpha;
 	}
 
-	for(std::array<Person,array_size>::reverse_iterator it = persons.rbegin(); it != persons.rend(); it++){
-		cout << *it << endl;
-	}
+	{
+		//access: [], at, data();
+		cout << endl << "====access====" << endl;
+		std::array<Person, array_size> persons = babies;
 
-	//capacity:
-	cout << endl << "====capacity====" << endl;
+		// [n], Returns a reference to the element at position n in the array container.
+		// at(n): Returns a reference to the element at position n in the array.
+		// front: Returns a reference to the first element in the array container.
+		// end: Returns a reference to the last element in the array container
+		// data: Returns a pointer to the first element in the array object.
 
-	// size: Returns the number of elements in the array container.
-	// max_size: Returns the maximum number of elements that the array container can hold.
-	// empty: Returns a bool value indicating whether the array container is empty, i.e. whether its size is 0.
-	cout << "size is " << persons.size() << endl;
-	cout << "max size is " << persons.max_size() << endl;
-	cout << boolalpha << "is empty " << persons.empty() << endl << noboolalpha;
+		cout << persons[1] << endl;
+		cout << persons.at(1) << endl;
 
-	//access: [], at, data();
-	cout << endl << "====access====" << endl;
+		cout << persons[5] << endl;
+		try{
+			cout << persons.at(5) << endl;
+		}catch(exception& e){
+			cout << "caught exception: " << e.what() << endl;
+		}
 
-	// [n], Returns a reference to the element at position n in the array container.
-	// at(n): Returns a reference to the element at position n in the array.
-	// front: Returns a reference to the first element in the array container.
-	// end: Returns a reference to the last element in the array container
-	// data: Returns a pointer to the first element in the array object.
+		persons[1].name = "boy2";
+		cout << persons.at(1) << endl;
 
-	cout << persons[1] << endl;
-	cout << persons.at(1) << endl;
+		cout << persons.front() << endl;
+		cout << persons.back() << endl;
 
-	cout << persons[5] << endl;
-	try{
-		cout << persons.at(5) << endl;
-	}catch(exception& e){
-		cout << "caught exception: " << e.what() << endl;
-	}
-
-	persons[1].name = "newbaby";
-	cout << persons.at(1) << endl;
-
-	cout << persons.front() << endl;
-	cout << persons.back() << endl;
-
-	Person* p = persons.data();
-	for ( int i = 0; i < array_size; i++){
-		cout << *(p+i) << endl;
+		Person* p = persons.data();
+		for ( int i = 0; i < array_size; i++){
+			cout << *(p+i) << endl;
+		}
 	}
 
 	//modifier:
@@ -199,6 +208,8 @@ int main(void){
 	{
 
 		cout << endl << "==== No member functions ==== " << endl;
+		std::array<Person, array_size> persons = babies;
+
 		//std::get
 		Person& p = std::get<2>(persons);
 		cout << p << endl;
